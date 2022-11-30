@@ -1,4 +1,23 @@
 pipeline {
+
+    environment {
+      branchname =  env.BRANCH_NAME.toLowerCase()
+      kubeconfig = getKubeconf(env.branchname)
+      registryCredential = 'jenkins_registry'
+      deployment1 = "${env.branchname == 'release-r2' ? 'sme-api-rc2' : 'sme-api' }"
+      deployment2 = "${env.branchname == 'release-r2' ? 'sme-pedagogico-worker-r2' : 'sme-pedagogico-worker' }"      
+      deployment3 = "${env.branchname == 'release-r2' ? 'sme-worker-fechamento-r2' : 'sme-worker-fechamento' }"  
+      deployment4 = "${env.branchname == 'release-r2' ? 'sme-worker-geral-r2' : 'sme-worker-geral' }"
+      deployment5 = "${env.branchname == 'release-r2' ? 'sme-worker-aee-r2' : 'sme-worker-aee' }"
+      deployment6 = "${env.branchname == 'release-r2' ? 'sme-worker-aula-r2' : 'sme-worker-aula' }"
+      deployment7 = "${env.branchname == 'release-r2' ? 'sme-worker-frequencia-r2' : 'sme-worker-frequencia' }"
+      deployment8 = "${env.branchname == 'release-r2' ? 'sme-worker-institucional-r2' : 'sme-worker-institucional' }"
+      deployment9 = "${env.branchname == 'release-r2' ? 'sme-worker-pendencias-r2' : 'sme-worker-pendencias' }"
+      deployment10 = "${env.branchname == 'release-r2' ? 'sme-worker-avaliacao-r2' : 'sme-worker-avaliacao' }"
+      deployment11 = "${env.branchname == 'release-r2' ? 'sme-worker-auditoria-r2' : 'sme-worker-auditoria' }"
+      deployment12 = "${env.branchname == 'release-r2' ? 'sme-worker-notificacoes-r2' : 'sme-worker-notificacoes' }"
+      deployment13 = "${env.branchname == 'release-r2' ? 'sme-worker-notificacoes-hub-r2' : 'sme-worker-notificacoes-hub' }"
+    }
   
     agent {
       node { label 'dotnet-5-rc' }
@@ -10,9 +29,30 @@ pipeline {
     }
   
     stages {
+      stage('CheckOut') {            
+        steps { checkout scm }            
+      }  
+    }
 
-        stage('CheckOut') {            
-            steps { checkout scm }            
-        }  
+      stage('Build') {
+        agent { label 'SME-JENKINS-AGENT1' }
+        steps {
+          parallel:(
+            sme-sgp-backend: {
+              checkout scm
+              script {
+                imagename1 = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
+                dockerImage1 = docker.build(imagename1, "-f src/SME.SGP.Api/Dockerfile .")
+              }
+            },
+            sme-worker-geral: {
+              checkout scm
+              script {
+                imagename2 = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
+                dockerImage2 = docker.build(imagename2, "-f src/SME.SGP.Worker.Rabbbit/Dockerfile .")
+              }
+            }
+          )
+        }
     }
   }
