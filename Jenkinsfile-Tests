@@ -1,0 +1,19 @@
+pipeline {
+  
+    agent {
+      node { label 'dotnet-5-rc' }
+    }
+
+    options {
+      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+      disableConcurrentBuilds()
+      skipDefaultCheckout()
+    }
+  
+    stages {
+
+        stage('CheckOut') {            
+            steps { checkout scm }            
+        }  
+    }
+  }
