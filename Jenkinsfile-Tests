@@ -36,23 +36,19 @@ pipeline {
 
       stage('Build') {
         agent { label 'SME-JENKINS-AGENT1' }
-        steps {
-          parallel:(
-            sme-sgp-backend: {
-              checkout scm
+          parallel {
+            stage('sme-sgp-backend') {
               script {
                 imagename1 = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
                 dockerImage1 = docker.build(imagename1, "-f src/SME.SGP.Api/Dockerfile .")
               }
-            },
-            sme-worker-geral: {
-              checkout scm
+            }
+            stage('sme-worker-geral') {
               script {
                 imagename2 = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
                 dockerImage2 = docker.build(imagename2, "-f src/SME.SGP.Worker.Rabbbit/Dockerfile .")
               }
             }
-          )
-        }
+          }
     }
   }
