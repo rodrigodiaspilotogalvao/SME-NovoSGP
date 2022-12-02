@@ -36,6 +36,7 @@ pipeline {
             stage('sme-sgp-backend') {
               agent { node { label 'builder' } }
               steps{
+                checkout scm
                 script {
                   imagename1 = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
                   dockerImage1 = docker.build(imagename1, "-f src/SME.SGP.Api/Dockerfile .")
@@ -45,6 +46,7 @@ pipeline {
             stage('sme-worker-geral') {
               agent { node { label 'builder' } }
               steps{
+                checkout scm
                 script {
                   imagename2 = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
                   dockerImage2 = docker.build(imagename2, "-f src/SME.SGP.Worker.Rabbbit/Dockerfile .")
