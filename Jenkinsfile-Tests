@@ -34,7 +34,7 @@ pipeline {
       stage('Build') {
           parallel {
             stage('sme-sgp-backend') {
-              agent { label 'builder' }
+              agent { node { label 'builder' } }
               steps{
                 script {
                   imagename1 = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
@@ -43,7 +43,7 @@ pipeline {
               }
             }
             stage('sme-worker-geral') {
-              agent { label 'builder' }
+              agent { node { label 'builder' } }
               steps{
                 script {
                   imagename2 = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
