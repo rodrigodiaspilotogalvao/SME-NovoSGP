@@ -35,8 +35,8 @@ pipeline {
               steps{
                 checkout scm
                 script {
-                  imagename1 = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
-                  dockerImage1 = docker.build(imagename1, "-f src/SME.SGP.Api/Dockerfile .")
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-sgp-backend"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Api/Dockerfile .")
                 }
               }
             }
@@ -45,8 +45,108 @@ pipeline {
               steps{
                 checkout scm
                 script {
-                  imagename2 = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
-                  dockerImage2 = docker.build(imagename2, "-f src/SME.SGP.Worker.Rabbbit/Dockerfile .")
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-geral"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Worker.Rabbbit/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-fechamento') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-fechamento"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Fechamento.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-aee') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-aee"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.AEE.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-aula') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-aula"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Aula.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-frequencia') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-frequencia"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Frequencia.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-institucional') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-institucional"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Institucional.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-pendencias') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-pendencias"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Pendencias.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-avaliacao') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-avaliacao"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Avaliacao.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-auditoria') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-auditoria"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Auditoria.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-notificacoes') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-notificacoes"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Notificacoes.Worker/Dockerfile .")
+                }
+              }
+            }
+            stage('sme-worker-notificacoes-hub') {
+              agent { node { label 'builder' } }
+              steps{
+                checkout scm
+                script {
+                  imagename = "registry.sme.prefeitura.sp.gov.br/teste/sme-worker-notificacoes-hub"
+                  dockerImage = docker.build(imagename, "-f src/SME.SGP.Notificacoes.Hub/Dockerfile .")
                 }
               }
             }
