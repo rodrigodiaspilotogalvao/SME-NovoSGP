@@ -153,6 +153,12 @@ pipeline {
           }
     }
   }
+
+    post {
+      script {
+        docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+      }
+  }
 }
 
 def getKubeconf(branchName) {
