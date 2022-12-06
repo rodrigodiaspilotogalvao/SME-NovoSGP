@@ -20,10 +20,10 @@ pipeline {
   
     agent {
       node { label 'dotnet-5-rc' }
-      options { timestamps () }
     }
 
     options {
+      timestamps ()
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
       disableConcurrentBuilds()
       skipDefaultCheckout()
