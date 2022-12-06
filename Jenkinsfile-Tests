@@ -186,17 +186,17 @@ pipeline {
            //if(testPassed){
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
                 dockerImage1.push()
-                //dockerImage2.push()
-                //dockerImage3.push()
-                //dockerImage4.push()
-                //dockerImage5.push()
-                //dockerImage6.push()
-                //dockerImage7.push()
-                //dockerImage8.push()
-                //dockerImage9.push()
-                //dockerImage10.push()
-                //dockerImage11.push()
-               // dockerImage12.push()
+                dockerImage2.push()
+                dockerImage3.push()
+                dockerImage4.push()
+                dockerImage5.push()
+                dockerImage6.push()
+                dockerImage7.push()
+                dockerImage8.push()
+                dockerImage9.push()
+                dockerImage10.push()
+                dockerImage11.push()
+                dockerImage12.push()
               }
           // }
         }
