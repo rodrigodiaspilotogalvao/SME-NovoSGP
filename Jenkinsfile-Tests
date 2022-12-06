@@ -38,6 +38,7 @@ pipeline {
           when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch '_development'; branch 'release'; branch 'release-r2'; branch 'infra/*'; branch 'feat/*';} } 
           parallel {
             stage('Sonar') {
+            boolean testPassed = true
             //when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch '_development'; branch 'release'; branch 'release-r2'; branch 'infra/*'; } } 
                 steps {
                   script{
@@ -177,6 +178,7 @@ pipeline {
           }
     }
     stage('Push'){
+      agent { node { label 'SME-AGENT-SGP' } }
       when { anyOf {  branch 'master'; branch 'main'; branch 'development'; branch 'release'; branch 'release-r2'; branch 'feat/*'; } }       
       steps {
         script{
