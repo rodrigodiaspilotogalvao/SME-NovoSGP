@@ -31,7 +31,7 @@ pipeline {
       stage('Build') {
           parallel {
             stage('sme-sgp-backend') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -41,7 +41,7 @@ pipeline {
               }
             }
             stage('sme-worker-geral') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -51,7 +51,7 @@ pipeline {
               }
             }
             stage('sme-worker-fechamento') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -61,7 +61,7 @@ pipeline {
               }
             }
             stage('sme-worker-aee') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -71,7 +71,7 @@ pipeline {
               }
             }
             stage('sme-worker-aula') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -81,7 +81,7 @@ pipeline {
               }
             }
             stage('sme-worker-frequencia') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -91,7 +91,7 @@ pipeline {
               }
             }
             stage('sme-worker-institucional') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -101,7 +101,7 @@ pipeline {
               }
             }
             stage('sme-worker-pendencias') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -111,7 +111,7 @@ pipeline {
               }
             }
             stage('sme-worker-avaliacao') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -121,7 +121,7 @@ pipeline {
               }
             }
             stage('sme-worker-auditoria') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -131,7 +131,7 @@ pipeline {
               }
             }
             stage('sme-worker-notificacoes') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
@@ -141,7 +141,7 @@ pipeline {
               }
             }
             stage('sme-worker-notificacoes-hub') {
-              agent { node { label 'builder' } }
+              agent { node { label 'SME-AGENT-SGP' } }
               steps{
                 checkout scm
                 script {
