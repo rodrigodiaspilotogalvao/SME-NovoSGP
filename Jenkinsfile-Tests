@@ -19,7 +19,7 @@ pipeline {
     }
   
     agent {
-      node { label 'sonar-sgp-2' }
+      node { label 'sonar-sgp' }
     }
 
     options {
