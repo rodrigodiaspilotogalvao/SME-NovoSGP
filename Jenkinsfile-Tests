@@ -19,7 +19,7 @@ pipeline {
     }
   
     agent {
-      node { label 'dotnet-5-rc' }
+      node { label 'sonar-sgp' }
     }
 
     options {
