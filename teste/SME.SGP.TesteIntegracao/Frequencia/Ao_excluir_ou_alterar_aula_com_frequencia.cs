@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Shouldly;
 using SME.SGP.Aplicacao.Interfaces;
@@ -7,6 +8,7 @@ using SME.SGP.Infra;
 using SME.SGP.TesteIntegracao.Setup;
 using System.Linq;
 using System.Threading.Tasks;
+using SME.SGP.Aplicacao;
 using Xunit;
 
 namespace SME.SGP.TesteIntegracao.Frequencia
@@ -42,17 +44,33 @@ namespace SME.SGP.TesteIntegracao.Frequencia
         [Fact(DisplayName = "Frequência - Ao diminuir quantidade de aula a frequencia deve ser excluida")]
         public async Task Ao_diminuir_quantidade_de_aula_a_frequencia_deve_ser_excluida()
         {
-            await CriarDadosBasicos(ObterPerfilProfessor(), Modalidade.Fundamental, ModalidadeTipoCalendario.FundamentalMedio, DATA_25_07_INICIO_BIMESTRE_3, DATA_30_09_FIM_BIMESTRE_3, BIMESTRE_3, DATA_30_09_FIM_BIMESTRE_3, COMPONENTE_CURRICULAR_PORTUGUES_ID_138.ToString(), true, TIPO_CALENDARIO_1, false, QUANTIDADE_AULA_2);
+            var dataAulaEmDiaDeSemana = DATA_30_09_FIM_BIMESTRE_3.ObterDiaDaSemana(DayOfWeek.Monday);
+            await CriarDadosBasicos(ObterPerfilProfessor(), Modalidade.Fundamental, ModalidadeTipoCalendario.FundamentalMedio, DATA_25_07_INICIO_BIMESTRE_3, dataAulaEmDiaDeSemana, BIMESTRE_3, DATA_30_09_FIM_BIMESTRE_3, COMPONENTE_CURRICULAR_PORTUGUES_ID_138.ToString(), true, TIPO_CALENDARIO_1, false);
             await CriarRegistrosConsolidacaoFrequenciaAlunoMensal();
             await CrieRegistroDeFrenquencia();
 
-            var dto = new AulaAlterarFrequenciaRequestDto(AULA_ID_1, QUANTIDADE_AULA_3);
-            var mensagem = new MensagemRabbit()
+            var aulas = ObterTodos<Dominio.Aula>();
+            
+            var alterarAulaUnica = ServiceProvider.GetService<IAlterarAulaUseCase>();
+            await alterarAulaUnica.Executar(new PersistirAulaDto()
             {
-                Mensagem = JsonConvert.SerializeObject(dto)
-            };
+                Id = 1,
+                DataAula = dataAulaEmDiaDeSemana,
+                Quantidade = NUMERO_AULA_2,
+                CodigoTurma = TURMA_CODIGO_1,
+                CodigoComponenteCurricular = long.Parse(COMPONENTE_CURRICULAR_PORTUGUES_ID_138.ToString()),
+                NomeComponenteCurricular = COMPONENTE_CURRICULAR_LINGUA_PORTUGUESA_NOME,
+                TipoCalendarioId = TIPO_CALENDARIO_1,
+                TipoAula = TipoAula.Normal,
+                CodigoUe = UE_CODIGO_1,
+                EhRegencia = false,
+                RecorrenciaAula = RecorrenciaAula.AulaUnica
+            });
+            
+            
+            var dto = new AulaAlterarFrequenciaRequestDto(AULA_ID_1, QUANTIDADE_AULA_3);
+            var mensagem = new MensagemRabbit() { Mensagem = JsonConvert.SerializeObject(dto)};
             var useCase = ServiceProvider.GetService<IAlterarAulaFrequenciaTratarUseCase>();
-
             await useCase.Executar(mensagem);
 
             var listaDeRegistroFrequencia = ObterTodos<RegistroFrequenciaAluno>();
