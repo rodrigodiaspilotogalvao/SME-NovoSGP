@@ -11,6 +11,14 @@ using SME.SGP.TesteIntegracao.Setup;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
+using Microsoft.Extensions.ObjectPool;
+using Microsoft.Extensions.Options;
+using SME.SGP.Infra;
+using SME.SGP.Infra.Interface;
+using SME.SGP.Infra.Interfaces;
+using SME.SGP.Infra.Utilitarios;
+using SME.SGP.TesteIntegracao.ServicosFakes;
 using Xunit;
 
 namespace SME.SGP.TesteIntegracao.NotaFechamentoFinal
@@ -25,8 +33,7 @@ namespace SME.SGP.TesteIntegracao.NotaFechamentoFinal
         protected override void RegistrarFakes(IServiceCollection services)
         {
             base.RegistrarFakes(services);
-
-            services.Replace(new ServiceDescriptor(typeof(IRepositorioCache), typeof(RepositorioCacheMemoria), ServiceLifetime.Scoped));   
+            services.Replace(new ServiceDescriptor(typeof(IRepositorioCache), typeof(RepositorioCacheMemoria), ServiceLifetime.Scoped));
         }
 
         [Fact]

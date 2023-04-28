@@ -17,6 +17,8 @@
       <Compile Remove="RelatorioAcompanhamentoAprendizagem\ServicosFakes\**" />
       <EmbeddedResource Remove="RelatorioAcompanhamentoAprendizagem\ServicosFakes\**" />
       <None Remove="RelatorioAcompanhamentoAprendizagem\ServicosFakes\**" />
+      <Compile Remove="ServicosFakes\ConfiguracaoRabbitFake.cs" />
+      <Compile Remove="ServicosFakes\ConfiguracaoRabbitLogOptionsFake.cs" />
     </ItemGroup>
 
     <ItemGroup>
